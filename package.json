@@ -1,0 +1,63 @@
+{
+  "name": "@scrumble-nl/react-quick-modal",
+  "version": "1.0.0",
+  "description": "A quick and easy wrapper around react-bootstrap modal, you can add or remove a modal from anywhere in your application with a few simple steps.\n\n",
+  "main": "lib/quick-modal.js",
+  "types": "lib/quick-modal.d.ts",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "React",
+    "Bootstrap",
+    "Modal"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scrumble-nl/react-quick-modal.git"
+  },
+  "author": "Scrumble",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scrumble-nl/react-quick-modal/issues"
+  },
+  "homepage": "https://github.com/scrumble-nl/react-quick-modal#readme",
+  "files": [
+    "lib/**/*"
+  ],
+  "peerDependencies": {
+    "react": "^16.9.0",
+    "react-bootstrap": "^1.0.0-beta.12"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-export-default-from": "^7.10.1",
+    "@types/jest": "^25.1.2",
+    "@types/node-sass": "^4.11.0",
+    "@types/react": "^16.9.2",
+    "jest": "^25.2.4",
+    "node-sass": "^4.13.1",
+    "prettier": "^1.18.2",
+    "react": "^16.9.0",
+    "react-bootstrap": "^1.0.0-beta.12",
+    "react-dom": "^16.13.1",
+    "ts-jest": "^25.2.0",
+    "tslint": "^5.19.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.6.2"
+  },
+  "directories": {
+    "lib": "lib"
+  }
+}
