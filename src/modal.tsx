@@ -66,7 +66,7 @@ class Modal extends React.Component<props & ModalProps, state> {
 
     render = (): JSX.Element => {
         return (
-            <BootstrapModal show={this.state.show} onHide={this.handleClose.bind(this)} size={this.props.size || 'sm'}>
+            <BootstrapModal show={this.state.show} onHide={this.handleClose.bind(this)} size={this.props.size}>
                 <BootstrapModal.Header closeButton>
                     <BootstrapModal.Title>{this.props.title}</BootstrapModal.Title>
                 </BootstrapModal.Header>
