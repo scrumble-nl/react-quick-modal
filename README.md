@@ -62,7 +62,7 @@ export const InfoModal = (props: props): JSX.Element => {
 | `title`      | string                                                                                 | *true*     | The title for the modal          | `undefined` |
 | `cancelButton`       | ModalButton (as shown below)                                                                                 | *false*    | The cancel button config            | `undefined`
 | `confirmButton`      | ModalButton (as shown below)  | *false*    | The confirm button config                     | `undefined`
-| `size` | 'sm', 'lg', 'xl'                                                                                 | *false*    | The size of the modal | `sm`
+| `size` | 'sm', 'lg', 'xl'                                                                                 | *false*    | The size of the modal | `undefined`
 #### ModalButton
 | Name         | Type                                                                                   | Required | Description                         | Default |
 |--------------|:----------------------------------------------------------------------------------------:|:----------:|:-------------------------------------| -------- |
