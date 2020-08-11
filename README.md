@@ -83,16 +83,16 @@ import {withModal, ModalProps} from '@scrumble-nl/react-quick-modal'; // Step 1 
 
 class MyComponent extends React.Component<ModalProps, {}> {
 
-    addModal = (): void => {
+    showModal = (): void => {
         // Step 5
-        this.props.modal.addModal(InfoModal, {
+        this.props.modal.showModal(InfoModal, {
             additionalMessage: 'My first modal',
         }); 
     }
 
     render = (): JSX.Element => {
         return (
-            <button onClick={this.addModal}>Show my awesome modal</button>
+            <button onClick={this.showModal}>Show my awesome modal</button>
         )
     }
 }
