@@ -35,6 +35,7 @@ interface props {
     confirmButton?: modalButton;
     size?: 'sm' | 'lg' | 'xl';
     className?: string;
+    closeOnConfirm?: boolean;
 }
 
 interface state {
@@ -43,6 +44,10 @@ interface state {
 
 class Modal extends React.Component<props & ModalProps, state> {
     state = {show: true};
+
+    static defaultProps = {
+        closeOnConfirm: true,
+    }
 
     handleClose = (): void => {
         this.setState({show: false});
@@ -62,12 +67,19 @@ class Modal extends React.Component<props & ModalProps, state> {
             this.props.confirmButton.callback();
         }
 
-        this.handleClose();
+        if (this.props.closeOnConfirm) {
+            this.handleClose();
+        }
     };
 
     render = (): JSX.Element => {
         return (
-            <BootstrapModal className={this.props.className || ''} show={this.state.show} onHide={this.handleClose.bind(this)} size={this.props.size}>
+            <BootstrapModal
+                className={this.props.className || ''}
+                show={this.state.show}
+                onHide={this.handleClose.bind(this)}
+                size={this.props.size}
+            >
                 <BootstrapModal.Header closeButton>
                     <BootstrapModal.Title>{this.props.title}</BootstrapModal.Title>
                 </BootstrapModal.Header>
