@@ -1,6 +1,6 @@
 {
   "name": "@scrumble-nl/react-quick-modal",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "A quick and easy wrapper around react-bootstrap modal, you can add or remove a modal from anywhere in your application with a few simple steps.\n\n",
   "main": "lib/quick-modal.js",
   "types": "lib/quick-modal.d.ts",
