@@ -36,6 +36,7 @@ interface props {
     size?: 'sm' | 'lg' | 'xl';
     className?: string;
     closeOnConfirm?: boolean;
+    keyboard?: boolean;
 }
 
 interface state {
@@ -79,6 +80,7 @@ class Modal extends React.Component<props & ModalProps, state> {
                 show={this.state.show}
                 onHide={this.handleClose.bind(this)}
                 size={this.props.size}
+                keyboard={this.props.keyboard}
             >
                 <BootstrapModal.Header closeButton>
                     <BootstrapModal.Title>{this.props.title}</BootstrapModal.Title>
