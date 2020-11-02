@@ -48,7 +48,7 @@ class Modal extends React.Component<props & ModalProps, state> {
 
     static defaultProps = {
         closeOnConfirm: true,
-    }
+    };
 
     handleClose = (): void => {
         this.setState({show: false});
