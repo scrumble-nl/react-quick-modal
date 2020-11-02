@@ -81,6 +81,7 @@ class Modal extends React.Component<props & ModalProps, state> {
                 onHide={this.handleClose.bind(this)}
                 size={this.props.size}
                 keyboard={this.props.keyboard}
+                backdrop={false === this.props.keyboard ? 'static' : undefined}
             >
                 <BootstrapModal.Header closeButton>
                     <BootstrapModal.Title>{this.props.title}</BootstrapModal.Title>
