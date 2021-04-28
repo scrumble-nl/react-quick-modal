@@ -34,6 +34,7 @@ interface props {
     cancelButton?: modalButton;
     confirmButton?: modalButton;
     size?: 'sm' | 'lg' | 'xl';
+    backdrop?: 'static' | true | false;
 }
 
 interface state {
@@ -42,6 +43,8 @@ interface state {
 
 class Modal extends React.Component<props & ModalProps, state> {
     state = {show: true};
+
+    static defaultProps = {backdrop: true};
 
     handleClose = (): void => {
         this.setState({show: false});
@@ -66,7 +69,12 @@ class Modal extends React.Component<props & ModalProps, state> {
 
     render = (): JSX.Element => {
         return (
-            <BootstrapModal show={this.state.show} onHide={this.handleClose.bind(this)} size={this.props.size}>
+            <BootstrapModal
+                show={this.state.show}
+                onHide={this.handleClose.bind(this)}
+                size={this.props.size}
+                backdrop={this.props.backdrop}
+            >
                 <BootstrapModal.Header closeButton>
                     <BootstrapModal.Title>{this.props.title}</BootstrapModal.Title>
                 </BootstrapModal.Header>
