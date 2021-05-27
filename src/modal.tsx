@@ -35,6 +35,8 @@ interface props {
     confirmButton?: modalButton;
     size?: 'sm' | 'lg' | 'xl';
     className?: string;
+    closeOnConfirm?: boolean;
+    keyboard?: boolean;
 }
 
 interface state {
@@ -43,6 +45,10 @@ interface state {
 
 class Modal extends React.Component<props & ModalPropsWith, state> {
     state = {show: true};
+
+    static defaultProps = {
+        closeOnConfirm: true,
+    };
 
     handleClose = (): void => {
         this.setState({show: false});
@@ -62,7 +68,9 @@ class Modal extends React.Component<props & ModalPropsWith, state> {
             this.props.confirmButton.callback();
         }
 
-        this.handleClose();
+        if (this.props.closeOnConfirm) {
+            this.handleClose();
+        }
     };
 
     render = (): JSX.Element => {
@@ -72,6 +80,8 @@ class Modal extends React.Component<props & ModalPropsWith, state> {
                 show={this.state.show}
                 onHide={this.handleClose.bind(this)}
                 size={this.props.size}
+                keyboard={this.props.keyboard}
+                backdrop={false === this.props.keyboard ? 'static' : undefined}
             >
                 <BootstrapModal.Header closeButton>
                     <BootstrapModal.Title>{this.props.title}</BootstrapModal.Title>
