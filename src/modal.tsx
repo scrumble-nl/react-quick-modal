@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {ModalProps} from './quick-modal';
 import {withModal} from './modal-consumer';
+import {ModalPropsWith} from './quick-modal';
 import {Button, Modal as BootstrapModal} from 'react-bootstrap';
 
 type buttonType =
@@ -43,7 +43,7 @@ interface state {
     show: boolean;
 }
 
-class Modal extends React.Component<props & ModalProps, state> {
+class Modal extends React.Component<props & ModalPropsWith, state> {
     state = {show: true};
 
     static defaultProps = {
