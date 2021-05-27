@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {ModalProps} from './quick-modal';
 import {withModal} from './modal-consumer';
+import {ModalPropsWith} from './quick-modal';
 import {Button, Modal as BootstrapModal} from 'react-bootstrap';
 
 type buttonType =
@@ -41,7 +41,7 @@ interface state {
     show: boolean;
 }
 
-class Modal extends React.Component<props & ModalProps, state> {
+class Modal extends React.Component<props & ModalPropsWith, state> {
     state = {show: true};
 
     handleClose = (): void => {
@@ -67,7 +67,12 @@ class Modal extends React.Component<props & ModalProps, state> {
 
     render = (): JSX.Element => {
         return (
-            <BootstrapModal className={this.props.className || ''} show={this.state.show} onHide={this.handleClose.bind(this)} size={this.props.size}>
+            <BootstrapModal
+                className={this.props.className || ''}
+                show={this.state.show}
+                onHide={this.handleClose.bind(this)}
+                size={this.props.size}
+            >
                 <BootstrapModal.Header closeButton>
                     <BootstrapModal.Title>{this.props.title}</BootstrapModal.Title>
                 </BootstrapModal.Header>

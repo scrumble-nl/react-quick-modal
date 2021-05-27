@@ -70,18 +70,42 @@ export const InfoModal = (props: props): JSX.Element => {
 | `callback`       | () => void                                                                                 | *false*    | The onClick callback           | `undefined`
 | `variant`      | 'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark', 'light', 'link', 'outline-primary', 'outline-secondary', 'outline-success', 'outline-danger', 'outline-warning', 'outline-info', 'outline-dark', 'outline-light' | *false*    | The button type                      | `primary` for confirm and `secondary` for cancle
 
-### Adding modals
+### Adding modals hooks
+1. Import `useModal` in the component where you want to create a modal
+2. Import your freshly created modal `InfoModal`
+3. Finally, you can create a modal by passing the component and its required props
+```typescript
+import React from 'react';
+import './info-modal'; // Step 2
+import {withModal, ModalPropsWith} from '@scrumble-nl/react-quick-modal'; // Step 1
+
+const MyComponent = (): JSX.Element => {
+    const {showModal, hideModal} = useModal();
+
+    const toggleModal = (): void => {
+        // Step 3
+        showModal(InfoModal, {
+            additionalMessage: 'My first modal',
+        }); 
+    }
+
+    return (
+        <button onClick={this.showModal}>Show my awesome modal</button>
+    )
+}
+```
+### Adding modals class component
 1. Import `withModal` in the component where you want to create a modal
-2. If you are using TypeScript, import `ModalProps` and extend it for your props interface
+2. If you are using TypeScript, import `ModalPropsWith` and extend it for your props interface
 3. Add `export default withModal(MyComponent)` to the file
 4. Import your freshly created modal `InfoModal`
 5. Finally, you can create a modal by passing the component and its required props
 ```typescript
 import React from 'react';
 import './info-modal'; // Step 4
-import {withModal, ModalProps} from '@scrumble-nl/react-quick-modal'; // Step 1 (& 2)
+import {withModal, ModalPropsWith} from '@scrumble-nl/react-quick-modal'; // Step 1 (& 2)
 
-class MyComponent extends React.Component<ModalProps, {}> {
+class MyComponent extends React.Component<ModalPropsWith, {}> {
 
     showModal = (): void => {
         // Step 5
