@@ -90,7 +90,7 @@ const MyComponent = (): JSX.Element => {
     }
 
     return (
-        <button onClick={this.showModal}>Show my awesome modal</button>
+        <button onClick={() => toggleModal()}>Show my awesome modal</button>
     )
 }
 ```
