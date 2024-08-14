@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "es2015",
     "declaration": true,
-    "strict": false,
+    "strict": true,
     "outDir": "./lib",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "target": "ES5",
     "esModuleInterop": true,
     "jsx": "react",
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "lib": ["es5", "es2015", "es2016", "dom"],
-    "moduleResolution": "node"
+    "moduleResolution": "node16"
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/__tests__/*"]

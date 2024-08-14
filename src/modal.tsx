@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {PropsWithChildren, useCallback, useState} from 'react';
 
-import {withModal} from './modal-consumer';
-import {ModalPropsWith} from './quick-modal';
 import {Button, Modal as BootstrapModal} from 'react-bootstrap';
+
+import {ModalPropsWith} from './quick-modal';
 
 type buttonType =
     | 'primary'
@@ -29,87 +29,83 @@ type modalButton = {
     variant?: buttonType;
 };
 
-interface props {
-    title: string;
-    cancelButton?: modalButton;
-    confirmButton?: modalButton;
-    size?: 'sm' | 'lg' | 'xl';
-    className?: string;
-    closeOnConfirm?: boolean;
-    keyboard?: boolean;
-}
+type props = PropsWithChildren<
+    {
+        title: string;
+        cancelButton?: modalButton;
+        confirmButton?: modalButton;
+        size?: 'sm' | 'lg' | 'xl';
+        className?: string;
+        closeOnConfirm?: boolean;
+        keyboard?: boolean;
+    } & ModalPropsWith
+>;
 
-interface state {
-    show: boolean;
-}
+const Modal = ({
+    modal,
+    cancelButton,
+    confirmButton,
+    className,
+    size,
+    keyboard,
+    title,
+    children,
+    closeOnConfirm = true,
+}: props) => {
+    const [show, setShow] = useState(true);
 
-class Modal extends React.Component<props & ModalPropsWith, state> {
-    state = {show: true};
+    const handleClose = useCallback(() => {
+        modal.hideModal();
+        setShow(false);
+    }, [modal]);
 
-    static defaultProps = {
-        closeOnConfirm: true,
-    };
-
-    handleClose = (): void => {
-        this.setState({show: false});
-        this.props.modal.hideModal();
-    };
-
-    handleCancel = (): void => {
-        if (this.props.cancelButton && this.props.cancelButton.callback) {
-            this.props.cancelButton.callback();
+    const handleCancel = useCallback(() => {
+        if (cancelButton && cancelButton.callback) {
+            cancelButton.callback();
         }
 
-        this.handleClose();
-    };
+        handleClose();
+    }, [handleClose, cancelButton]);
 
-    handleConfirm = (): void => {
-        if (this.props.confirmButton && this.props.confirmButton.callback) {
-            this.props.confirmButton.callback();
+    const handleConfirm = useCallback(() => {
+        if (confirmButton && confirmButton.callback) {
+            confirmButton.callback();
         }
 
-        if (this.props.closeOnConfirm) {
-            this.handleClose();
+        if (closeOnConfirm) {
+            handleClose();
         }
-    };
+    }, [handleClose, closeOnConfirm, confirmButton]);
 
-    render = (): JSX.Element => {
-        return (
-            <BootstrapModal
-                className={this.props.className || ''}
-                show={this.state.show}
-                onHide={this.handleClose.bind(this)}
-                size={this.props.size}
-                keyboard={this.props.keyboard}
-                backdrop={false === this.props.keyboard ? 'static' : undefined}
-            >
-                <BootstrapModal.Header closeButton>
-                    <BootstrapModal.Title>{this.props.title}</BootstrapModal.Title>
-                </BootstrapModal.Header>
-                <BootstrapModal.Body>{this.props.children}</BootstrapModal.Body>
-                {this.props.cancelButton || this.props.confirmButton ? (
-                    <BootstrapModal.Footer>
-                        {!this.props.cancelButton || (
-                            <Button
-                                variant={this.props.cancelButton.variant || 'secondary'}
-                                onClick={this.handleCancel}
-                            >
-                                {this.props.cancelButton.label || 'Cancel'}
-                            </Button>
-                        )}
-                        {!this.props.confirmButton || (
-                            <Button
-                                variant={this.props.confirmButton.variant || 'primary'}
-                                onClick={this.handleConfirm}
-                            >
-                                {this.props.confirmButton.label || 'Confirm'}
-                            </Button>
-                        )}
-                    </BootstrapModal.Footer>
-                ) : null}
-            </BootstrapModal>
-        );
-    };
-}
+    return (
+        <BootstrapModal
+            className={className || ''}
+            show={show}
+            onHide={handleClose}
+            size={size}
+            keyboard={keyboard}
+            backdrop={keyboard === false ? 'static' : undefined}
+        >
+            <BootstrapModal.Header closeButton>
+                <BootstrapModal.Title>{title}</BootstrapModal.Title>
+            </BootstrapModal.Header>
+            <BootstrapModal.Body>{children}</BootstrapModal.Body>
+            {cancelButton || confirmButton ? (
+                <BootstrapModal.Footer>
+                    {!cancelButton || (
+                        <Button variant={cancelButton.variant || 'secondary'} onClick={handleCancel}>
+                            {cancelButton.label || 'Cancel'}
+                        </Button>
+                    )}
+                    {!confirmButton || (
+                        <Button variant={confirmButton.variant || 'primary'} onClick={handleConfirm}>
+                            {confirmButton.label || 'Confirm'}
+                        </Button>
+                    )}
+                </BootstrapModal.Footer>
+            ) : null}
+        </BootstrapModal>
+    );
+};
 
-export default withModal(Modal);
+export default Modal;

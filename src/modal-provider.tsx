@@ -1,50 +1,50 @@
-import React from 'react';
+import React, {ComponentType, PropsWithChildren, useCallback, useMemo, useState} from 'react';
 
 import ModalRenderer from './modal-renderer';
+import {ModalHook, ModalProps} from './quick-modal';
 
-interface modalProps {
-    onRequestClose(): void;
-}
+export type IModalContext = {
+    component: ComponentType<ModalProps> | null;
+    props: object;
+    showModal: ModalHook['showModal'];
+    hideModal: ModalHook['hideModal'];
+};
 
-export const ModalContext = React.createContext({
+export const ModalContext = React.createContext<IModalContext>({
     component: null,
     props: {},
-    showModal(component: (props: modalProps) => JSX.Element, props?: object): void {},
+    showModal(): void {},
     hideModal(): void {},
 });
 
-export class ModalProvider extends React.Component {
-    state = {
-        component: null,
-        props: {},
-    };
+export const ModalProvider = ({children}: PropsWithChildren) => {
+    const [component, setComponent] = useState<ComponentType<ModalProps> | null>(null);
+    const [props, setProps] = useState<object>({});
 
-    showModal = (component: (props: modalProps) => JSX.Element, props = {}): void => {
-        this.setState({
+    const showModal: ModalHook['showModal'] = useCallback((component, props) => {
+        setComponent(component as ComponentType<ModalProps>);
+        setProps(props ?? {});
+    }, []);
+
+    const hideModal = useCallback(() => {
+        setProps({});
+        setComponent(null);
+    }, []);
+
+    const context = useMemo(
+        () => ({
             props,
             component,
-        });
-    };
+            showModal,
+            hideModal,
+        }),
+        [props, component, showModal, hideModal],
+    );
 
-    hideModal = (): void => {
-        this.setState({
-            props: {},
-            component: null,
-        });
-    };
-
-    render = (): JSX.Element => {
-        const context = {
-            ...this.state,
-            showModal: this.showModal,
-            hideModal: this.hideModal,
-        };
-
-        return (
-            <ModalContext.Provider value={context}>
-                <ModalRenderer />
-                {this.props.children}
-            </ModalContext.Provider>
-        );
-    };
-}
+    return (
+        <ModalContext.Provider value={context}>
+            <ModalRenderer />
+            {children}
+        </ModalContext.Provider>
+    );
+};
