@@ -2,7 +2,7 @@ import React, {PropsWithChildren, useCallback, useState} from 'react';
 
 import {Button, Modal as BootstrapModal} from 'react-bootstrap';
 
-import {ModalPropsWith} from './quick-modal';
+import {useModal} from './quick-modal';
 
 type buttonType =
     | 'primary'
@@ -29,20 +29,17 @@ type modalButton = {
     variant?: buttonType;
 };
 
-type props = PropsWithChildren<
-    {
-        title: string;
-        cancelButton?: modalButton;
-        confirmButton?: modalButton;
-        size?: 'sm' | 'lg' | 'xl';
-        className?: string;
-        closeOnConfirm?: boolean;
-        keyboard?: boolean;
-    } & ModalPropsWith
->;
+type props = PropsWithChildren<{
+    title: string;
+    cancelButton?: modalButton;
+    confirmButton?: modalButton;
+    size?: 'sm' | 'lg' | 'xl';
+    className?: string;
+    closeOnConfirm?: boolean;
+    keyboard?: boolean;
+}>;
 
 const Modal = ({
-    modal,
     cancelButton,
     confirmButton,
     className,
@@ -53,11 +50,12 @@ const Modal = ({
     closeOnConfirm = true,
 }: props) => {
     const [show, setShow] = useState(true);
+    const {hideModal} = useModal();
 
     const handleClose = useCallback(() => {
-        modal.hideModal();
+        hideModal();
         setShow(false);
-    }, [modal]);
+    }, [hideModal]);
 
     const handleCancel = useCallback(() => {
         if (cancelButton && cancelButton.callback) {
