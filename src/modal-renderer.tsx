@@ -1,13 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
-import {ModalConsumer} from './modal-consumer';
+import {ModalContext} from './modal-provider';
 
-const ModalRenderer = (): JSX.Element => (
-    <ModalConsumer>
-        {({component: Component, props, hideModal}) =>
-            Component ? <Component {...props} hideModal={hideModal} /> : null
-        }
-    </ModalConsumer>
-);
+const ModalRenderer = () => {
+    const {component, props, hideModal} = useContext(ModalContext);
+    const Component = component;
+
+    if (Component) {
+        return <Component {...props} hideModal={hideModal} />;
+    }
+
+    return null;
+};
 
 export default ModalRenderer;

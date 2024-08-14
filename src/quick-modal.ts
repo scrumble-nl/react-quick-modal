@@ -1,16 +1,15 @@
+import {ComponentType} from 'react';
+
 export {default as Modal} from './modal';
 export {ModalProvider} from './modal-provider';
 export {withModal, useModal} from './modal-consumer';
 
 export type ModalPropsWith = {
-    modal: {
-        showModal(component: (props: any) => JSX.Element, props?: object): void;
-        hideModal(): void;
-    };
+    modal: ModalHook;
 };
 
 export type ModalHook = {
-    showModal(component: (props: any) => JSX.Element, props?: object): void;
+    showModal<P extends ModalProps>(component: ComponentType<P>, props?: Omit<P, keyof ModalProps>): void;
     hideModal(): void;
 };
 
