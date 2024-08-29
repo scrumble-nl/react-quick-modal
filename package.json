@@ -1,6 +1,6 @@
 {
   "name": "@scrumble-nl/react-quick-modal",
-  "version": "3.0.0",
+  "version": "3.0.1-beta.4",
   "description": "A quick and easy wrapper around react-bootstrap modal, you can add or remove a modal from anywhere in your application with a few simple steps.\n\n",
   "main": "lib/quick-modal.js",
   "types": "lib/quick-modal.d.ts",
@@ -35,6 +35,7 @@
   ],
   "peerDependencies": {
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-bootstrap": "^2.5.0"
   },
   "devDependencies": {
@@ -53,9 +54,6 @@
     "eslint-plugin-react": "^7.29.3",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.5.1",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.5.0",
-    "react-dom": "^18.2.0",
     "typescript": "^4.6.2"
   },
   "directories": {

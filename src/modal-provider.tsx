@@ -10,19 +10,14 @@ export type IModalContext = {
     hideModal: ModalHook['hideModal'];
 };
 
-export const ModalContext = React.createContext<IModalContext>({
-    component: null,
-    props: {},
-    showModal(): void {},
-    hideModal(): void {},
-});
+export const ModalContext = React.createContext<IModalContext>({} as IModalContext);
 
 export const ModalProvider = ({children}: PropsWithChildren) => {
     const [component, setComponent] = useState<ComponentType<ModalProps> | null>(null);
     const [props, setProps] = useState<object>({});
 
     const showModal: ModalHook['showModal'] = useCallback((component, props) => {
-        setComponent(component as ComponentType<ModalProps>);
+        setComponent(() => component as ComponentType<ModalProps>);
         setProps(props ?? {});
     }, []);
 
