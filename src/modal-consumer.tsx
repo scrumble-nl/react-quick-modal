@@ -7,7 +7,7 @@ type ModalConsumerProps = {
     children: any;
 };
 
-export const ModalConsumer = ({children}: ModalConsumerProps): ReactElement => (
+export const ModalConsumer = ({children}: ModalConsumerProps): ReactElement<any> => (
     <ModalContext.Consumer>{context => children(context)}</ModalContext.Consumer>
 );
 
