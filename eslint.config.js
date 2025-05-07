@@ -1,4 +1,3 @@
-// eslint.config.js
 import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginPrettier from 'eslint-plugin-prettier';
