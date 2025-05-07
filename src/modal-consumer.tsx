@@ -4,10 +4,10 @@ import {ModalHook, ModalPropsWith} from './quick-modal';
 import {IModalContext, ModalContext} from './modal-provider';
 
 type ModalConsumerProps = {
-    children: any;
+    children: (context: IModalContext) => ReactElement;
 };
 
-export const ModalConsumer = ({children}: ModalConsumerProps): ReactElement<any> => (
+export const ModalConsumer = ({children}: ModalConsumerProps): ReactElement => (
     <ModalContext.Consumer>{context => children(context)}</ModalContext.Consumer>
 );
 
