@@ -1,8 +1,9 @@
 import React, {PropsWithChildren, useCallback, useState} from 'react';
 
-import {Button, Modal as BootstrapModal} from 'react-bootstrap';
+import {Button, Dropdown, Modal as BootstrapModal} from 'react-bootstrap';
 
-import {useModal} from './quick-modal';
+import './modal.css';
+import {ModalProps, useModal} from './quick-modal';
 
 type buttonType =
     | 'primary'
@@ -29,15 +30,16 @@ type modalButton = {
     variant?: buttonType;
 };
 
-type props = PropsWithChildren<{
-    title: string;
-    cancelButton?: modalButton;
-    confirmButton?: modalButton;
-    size?: 'sm' | 'lg' | 'xl';
-    className?: string;
-    closeOnConfirm?: boolean;
-    keyboard?: boolean;
-}>;
+type props = ModalProps &
+    PropsWithChildren<{
+        title: string;
+        cancelButton?: modalButton;
+        confirmButton?: modalButton;
+        size?: 'sm' | 'lg' | 'xl';
+        className?: string;
+        closeOnConfirm?: boolean;
+        keyboard?: boolean;
+    }>;
 
 const Modal = ({
     cancelButton,
@@ -48,9 +50,10 @@ const Modal = ({
     title,
     children,
     closeOnConfirm = true,
+    hideModal,
 }: props) => {
     const [show, setShow] = useState(true);
-    const {hideModal} = useModal();
+    const {displayMode, setDisplayMode, containerRef} = useModal();
 
     const handleClose = useCallback(() => {
         hideModal();
@@ -77,15 +80,29 @@ const Modal = ({
 
     return (
         <BootstrapModal
-            className={className || ''}
+            className={`${className || ''} ${
+                displayMode === 'drawer' ? 'modal-drawer' : displayMode === 'fullscreen' ? 'modal-fullscreen' : ''
+            }`}
             show={show}
             onHide={handleClose}
             size={size}
+            container={displayMode === 'fullscreen' && containerRef ? containerRef.current : undefined}
             keyboard={keyboard}
             backdrop={keyboard === false ? 'static' : undefined}
         >
             <BootstrapModal.Header closeButton>
                 <BootstrapModal.Title>{title}</BootstrapModal.Title>
+                <Dropdown className="ms-auto">
+                    <Dropdown.Toggle variant="link" id="dropdown-basic">
+                        &#x22EE;
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => setDisplayMode('default')}>Default</Dropdown.Item>
+                        <Dropdown.Item onClick={() => setDisplayMode('drawer')}>Drawer</Dropdown.Item>
+                        <Dropdown.Item onClick={() => setDisplayMode('fullscreen')}>Full Screen</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
             </BootstrapModal.Header>
             <BootstrapModal.Body>{children}</BootstrapModal.Body>
             {cancelButton || confirmButton ? (
