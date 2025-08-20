@@ -16,7 +16,7 @@ export const withModal =
     (props: P) => <ModalConsumer>{(context: IModalContext) => <Component modal={context} {...props} />}</ModalConsumer>;
 
 export const useModal = (): ModalHook => {
-    const {showModal, hideModal} = useContext(ModalContext);
+    const {showModal, hideModal, displayMode, setDisplayMode, containerRef} = useContext(ModalContext);
 
-    return {showModal, hideModal};
+    return {showModal, hideModal, displayMode, setDisplayMode, containerRef};
 };
